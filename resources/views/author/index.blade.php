@@ -23,13 +23,13 @@
             </tr>
         </thead>
         <tbody>
-            @forelse($categories as $category)
+            @forelse($authors as $author)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $author->name }}</td>
                     <td>
                         <!-- Botão de Visualizar -->
-                        <a href="{{ route('author.show', $category) }}" class="btn btn-info btn-sm">
+                        <a href="{{ route('author.show', $author) }}" class="btn btn-info btn-sm">
                             <i class="bi bi-eye"></i> Visualizar
                         </a>
 

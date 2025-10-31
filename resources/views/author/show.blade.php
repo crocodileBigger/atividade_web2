@@ -2,11 +2,11 @@
 
 @section('content')
 <div class="container">
-    <h1 class="my-4">Detalhes da Categoria</h1>
+    <h1 class="my-4">Detalhes da author</h1>
 
     <div class="card">
         <div class="card-header">
-            Categoria: {{ $category->name }}
+            author: {{ $author->name }}
         </div>
         <div class="card-body">
             <p><strong>ID:</strong> {{ $author->id }}</p>

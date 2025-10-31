@@ -1,65 +1,66 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Author;
 use Illuminate\Http\Request;
 
-class authorController extends Controller
+class AuthorController extends Controller
 {
-    // Exibe uma lista de categorias
+    // Exibe uma lista de autores
     public function index()
     {
-        $author = Author::all();
-        return view('author.index', compact('author'));
+        $authors = Author::all();
+        return view('author.index', compact('authors'));
     }
-    // Mostra o formulário para criar uma nova categoria
+
+    // Mostra o formulário para criar um novo autor
     public function create()
     {
         return view('author.create');
     }
 
-    // Armazena uma nova categoria no banco de dados
+    // Armazena um novo autor no banco de dados
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|unique:author|max:255',
+            'name' => 'required|string|unique:authors|max:255',
         ]);
 
-        author::create($request->all());
+        Author::create($request->all());
 
-        return redirect()->route('author.index')->with('success', 'Categoria criada com sucesso.');
+        return redirect()->route('author.index')->with('success', 'Autor criado com sucesso.');
     }
 
-    // Exibe uma categoria específica
-    public function show(author $author1)
+    // Exibe um autor específico
+    public function show(Author $author)
     {
         return view('author.show', compact('author'));
     }
 
-    // Mostra o formulário para editar uma categoria existente
-    public function edit(author $author1)
+    // Mostra o formulário para editar um autor existente
+    public function edit(Author $author)
     {
         return view('author.edit', compact('author'));
     }
 
-    // Atualiza uma categoria no banco de dados
-    public function update(Request $request, author $author1)
+    // Atualiza um autor no banco de dados
+    public function update(Request $request, Author $author)
     {
         $request->validate([
-            'name' => 'required|string|unique:author,name,' . $author->id . '|max:255',
+            'name' => 'required|string|unique:authors,name,' . $author->id . '|max:255',
         ]);
 
         $author->update($request->all());
 
-        return redirect()->route('author.index')->with('success', 'author atualizada com sucesso.');
+        return redirect()->route('author.index')->with('success', 'Autor atualizado com sucesso.');
     }
 
-    // Remove uma categoria do banco de dados
-    public function destroy(author $author1)
+    // Remove um autor do banco de dados
+    public function destroy(Author $author)
     {
-        $category->delete();
+        $author->delete();
 
-        return redirect()->route('author.index')->with('success', 'author excluída com sucesso.');
+        return redirect()->route('author.index')->with('success', 'Autor excluído com sucesso.');
     }
 }
-
