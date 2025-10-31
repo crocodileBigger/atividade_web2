@@ -23,7 +23,7 @@ class PublisherController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|unique:publisher|max:255',
+            'name' => 'required|string|unique:publishers|max:255',
         ]);
 
         Publisher::create($request->all());
