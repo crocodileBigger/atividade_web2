@@ -9,32 +9,32 @@ class PublisherController extends Controller
     // Exibe uma lista de categorias
     public function index()
     {
-        $categories = Publisher::all();
-        return view('Publisher.index', compact('Publisher'));
+        $publisher = Publisher::all();
+        return view('publisher.index', compact('publisher'));
     }
 
     // Mostra o formulário para criar uma nova categoria
     public function create()
     {
-        return view('Publisher.create');
+        return view('publisher.create');
     }
 
     // Armazena uma nova categoria no banco de dados
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|unique:Publisher|max:255',
+            'name' => 'required|string|unique:publisher|max:255',
         ]);
 
         Publisher::create($request->all());
 
-        return redirect()->route('Publisher.index')->with('success', 'Publisher criada com sucesso.');
+        return redirect()->route('publisher.index')->with('success', 'publisher criada com sucesso.');
     }
 
     // Exibe uma categoria específica
     public function show(Publisher $publisher)
     {
-        return view('Publisher.show', compact('publisher'));
+        return view('publisher.show', compact('publisher'));
     }
 
     // Mostra o formulário para editar uma categoria existente
@@ -47,7 +47,7 @@ class PublisherController extends Controller
     public function update(Request $request, Publisher $publisher)
     {
         $request->validate([
-            'name' => 'required|string|unique:publisher,name,' . $publisher->id . '|max:255',
+            'name' => 'required|string|unique:publishers,name,' . $publisher->id . '|max:255',
         ]);
 
         $publisher->update($request->all());
@@ -58,7 +58,7 @@ class PublisherController extends Controller
     // Remove uma categoria do banco de dados
     public function destroy(Publisher $publisher)
     {
-        $category->delete();
+        $publisher->delete();
 
         return redirect()->route('publisher.index')->with('success', 'publisher excluída com sucesso.');
     }
