@@ -78,14 +78,6 @@ class BookController extends Controller
 
         return redirect()->route('books.index')->with('success', 'Livro atualizado com sucesso.');
     }
-    public function show(Book $book)
-    {
-        // Carregando autor, editora e categoria do livro com eager loading
-        $book->load(['author', 'publisher', 'category']);
-
-        return view('books.show', compact('book'));
-    }
-
     public function index()
     {
         // Carregar os livros com autores usando eager loading e paginação
