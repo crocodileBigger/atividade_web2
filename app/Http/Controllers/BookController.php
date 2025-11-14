@@ -102,11 +102,5 @@ public function show(Book $book)
 
     return view('books.show', compact('book','users'));
     }
-    public function books()
-{
-    return $this->belongsToMany(Book::class, 'borrowings')
-                ->withPivot('id', 'borrowed_at', 'returned_at')
-                ->withTimestamps();
-}
 }
 

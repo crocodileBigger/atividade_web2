@@ -28,10 +28,4 @@ class UserController extends Controller
 
         return redirect()->route('users.index')->with('success', 'Usuário atualizado com sucesso.');
     }
-    public function users()
-    {
-    return $this->belongsToMany(User::class, 'borrowings')
-                ->withPivot('id', 'borrowed_at', 'returned_at')
-                ->withTimestamps();
-    }
 }

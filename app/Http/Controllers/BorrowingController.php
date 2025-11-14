@@ -15,7 +15,7 @@ class BorrowingController extends Controller
     ]);
 
     Borrowing::create([
-        'us er_id' => $request->user_id,
+        'user_id' => $request->user_id,
         'book_id' => $book->id,
         'borrowed_at' => now(),
     ]);
