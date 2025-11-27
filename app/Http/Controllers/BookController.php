@@ -7,6 +7,7 @@ use App\Models\Author;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
@@ -17,19 +18,27 @@ class BookController extends Controller
     }
 
     // Salvar livro com input de ID
-    public function storeWithId(Request $request)
-    {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'publisher_id' => 'required|exists:publishers,id',
-            'author_id' => 'required|exists:authors,id',
-            'category_id' => 'required|exists:categories,id',
-        ]);
 
-        Book::create($request->all());
+public function storeWithId(Request $request)
+{
+    $request->validate([
+        'capa' => 'required|image|mimes:jpg,jpeg,png,webp',
+        'title' => 'required|string|max:255',
+        'publisher_id' => 'required|exists:publishers,id',
+        'author_id' => 'required|exists:authors,id',
+        'category_id' => 'required|exists:categories,id',
+    ]);
 
-        return redirect()->route('books.index')->with('success', 'Livro criado com sucesso.');
+    $data = $request->all();
+
+    if ($request->hasFile('capa')) {
+        $data['capa'] = $request->file('capa')->store('capas', 'public');
+        // Isso salva em: storage/app/public/capas/xxxx.jpg
     }
+    Book::create($data);
+    return redirect()->route('books.index')->with('success', 'Livro criado com sucesso.');
+}
+
 
     // Formulário com input select
     public function createWithSelect()
@@ -45,16 +54,31 @@ class BookController extends Controller
     public function storeWithSelect(Request $request)
     {
         $request->validate([
+            'capa' => 'required|image|mimes:jpg,jpeg,png,webp',
             'title' => 'required|string|max:255',
             'publisher_id' => 'required|exists:publishers,id',
             'author_id' => 'required|exists:authors,id',
             'category_id' => 'required|exists:categories,id',
         ]);
 
-        Book::create($request->all());
+        $data = $request->only([
+            'title',
+            'publisher_id',
+            'author_id',
+            'category_id',
+        ]);
 
-        return redirect()->route('books.index')->with('success', 'Livro criado com sucesso.');
+    if ($request->hasFile('capa')) {
+        $data['capa'] = $request->file('capa')->store('capas', 'public');
     }
+
+    Book::create($data);
+
+    return redirect()
+        ->route('books.index')
+        ->with('success', 'Livro criado com sucesso.');
+    }
+
 
     public function edit(Book $book)
     {
@@ -72,12 +96,34 @@ class BookController extends Controller
             'publisher_id' => 'required|exists:publishers,id',
             'author_id' => 'required|exists:authors,id',
             'category_id' => 'required|exists:categories,id',
+            'capa' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
-        $book->update($request->all());
+        $data = $request->only([
+            'title',
+            'publisher_id',
+            'author_id',
+            'category_id'
+        ]);
 
-        return redirect()->route('books.index')->with('success', 'Livro atualizado com sucesso.');
+        // Se o usuário enviou uma nova capa
+    if ($request->hasFile('capa')) {
+
+        // Apaga a capa antiga se existir
+        if ($book->capa && \Storage::disk('public')->exists($book->capa)) {
+            \Storage::disk('public')->delete($book->capa);
+        }
+
+        // Salva a nova capa
+        $data['capa'] = $request->file('capa')->store('capas', 'public');
     }
+
+    $book->update($data);
+
+    return redirect()->route('books.index')
+        ->with('success', 'Livro atualizado com sucesso.');
+    }
+
     public function index()
     {
         // Carregar os livros com autores usando eager loading e paginação
@@ -86,14 +132,22 @@ class BookController extends Controller
         return view('books.index', compact('books'));
 
     }
+
     public function destroy(Book $book)
     {
-        $book->delete();
-
-        return redirect()->route('books.index')->with('success', 'livro excluída com sucesso.');
+    // Se existir capa, remove do storage
+    if ($book->capa && Storage::disk('public')->exists($book->capa)) {
+        Storage::disk('public')->delete($book->capa);
     }
-public function show(Book $book)
-{
+
+    // Apaga o livro do BD
+    $book->delete();
+
+    return redirect()->route('books.index')->with('success', 'Livro excluído com sucesso.');
+    }
+
+    public function show(Book $book)
+    {
     // Carregando autor, editora e categoria do livro com eager loading
     $book->load(['author', 'publisher', 'category']);
 

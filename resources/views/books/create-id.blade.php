@@ -2,10 +2,25 @@
 
 @section('content')
 <div class="container">
+
+    <a href="{{ route('books.index') }}" class="btn btn-success mb-3">
+        <i class="bi bi-plus"></i> voltar
+    </a>
+
     <h1 class="my-4">Adicionar Livro (Com ID)</h1>
 
-    <form action="{{ route('books.store.id') }}" method="POST">
+    <form action="{{ route('books.store.id') }}" method="POST" enctype="multipart/form-data>
         @csrf
+    <div class="mb-3">
+        <label for="capa" class="form-label">Capa</label>
+        <input type="file" class="form-control @error('capa') is-invalid @enderror" id="capa" name="capa" accept="image/*">
+        @error('capa')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
+
         <div class="mb-3">
             <label for="title" class="form-label">Título</label>
             <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" required>

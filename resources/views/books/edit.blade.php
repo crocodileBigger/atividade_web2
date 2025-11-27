@@ -3,10 +3,21 @@
 @section('content')
 <div class="container">
     <h1 class="my-4">Editar Livro</h1>
-
-    <form action="{{ route('books.update', $book) }}" method="POST">
+    <form action="{{ route('books.update', $book) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
+
+    <img src="{{ asset('storage/' . $book->capa) }}" alt="Capa do livro" width="200">
+
+    <div class="mb-3">
+        <label for="capa" class="form-label">Capa</label>
+        <input type="file" class="form-control @error('capa') is-invalid @enderror" id="capa" name="capa" accept="image/*">
+        @error('capa')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
         <div class="mb-3">
             <label for="title" class="form-label">Título</label>
             <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title', $book->title) }}" required>
