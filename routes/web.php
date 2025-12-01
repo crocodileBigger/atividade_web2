@@ -27,8 +27,8 @@ Route::patch('/borrowings/{borrowing}/return', [BorrowingController::class, 'ret
 
 // Rotas RESTful para index, show, edit, update, delete (tem que ficar depois das rotas /books/create-id-number e /books/create-select)
 Route::resource('books', BookController::class)->except(['create', 'store']);
-Route::resource('author', authorController::class);
+Route::resource('authors', authorController::class);
 Route::resource('publisher', PublisherController::class);
-Route::resource('categories', CategoryController::class);
+Route::resource('Category', CategoryController::class);
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

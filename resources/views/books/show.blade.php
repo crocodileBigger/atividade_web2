@@ -12,7 +12,7 @@
         </div>
         <div class="card-body">
             <p><strong>Autor:</strong>
-                <a href="{{ route('author.show', $book->author->id) }}">
+                <a href="{{ route('authors.show', $book->author->id) }}">
                     {{ $book->author->name }}
                 </a>
             </p>
@@ -22,7 +22,7 @@
                 </a>
             </p>
             <p><strong>Categoria:</strong>
-                <a href="{{ route('categories.show', $book->category->id) }}">
+                <a href="{{ route('Category.show', $book->category->id) }}">
                     {{ $book->category->name }}
                 </a>
             </p>

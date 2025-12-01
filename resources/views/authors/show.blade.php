@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    <a href="{{ route('author.index') }}" class="btn btn-secondary mt-3">
+    <a href="{{ route('authors.index') }}" class="btn btn-secondary mt-3">
         <i class="bi bi-arrow-left"></i> Voltar
     </a>
 </div>

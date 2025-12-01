@@ -10,13 +10,13 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        return view('categories.index', compact('categories'));
+        return view('Category.index', compact('categories'));
     }
 
     // Mostra o formulário para criar uma nova categoria
     public function create()
     {
-        return view('categories.create');
+        return view('Category.create');
     }
 
     // Armazena uma nova categoria no banco de dados
@@ -28,23 +28,23 @@ class CategoryController extends Controller
 
         Category::create($request->all());
 
-        return redirect()->route('categories.index')->with('success', 'Categoria criada com sucesso.');
+        return redirect()->route('Category.index')->with('success', 'Categoria criada com sucesso.');
     }
 
     // Exibe uma categoria específica
-    public function show(Category $category)
+    public function show(Category $Category)
     {
-        return view('categories.show', compact('category'));
+        return view('Category.show', compact('Category'));
     }
 
     // Mostra o formulário para editar uma categoria existente
-    public function edit(Category $category)
+    public function edit(Category $Category)
     {
-        return view('categories.edit', compact('category'));
+        return view('Category.edit', compact('Category'));
     }
 
     // Atualiza uma categoria no banco de dados
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Category $Category)
     {
         $request->validate([
             'name' => 'required|string|unique:categories,name,' . $category->id . '|max:255',
@@ -52,15 +52,15 @@ class CategoryController extends Controller
 
         $category->update($request->all());
 
-        return redirect()->route('categories.index')->with('success', 'Categoria atualizada com sucesso.');
+        return redirect()->route('Category.index')->with('success', 'Categoria atualizada com sucesso.');
     }
 
     // Remove uma categoria do banco de dados
-    public function destroy(Category $category)
+    public function destroy(Category $Category)
     {
-        $category->delete();
+        $Category->delete();
 
-        return redirect()->route('categories.index')->with('success', 'Categoria excluída com sucesso.');
+        return redirect()->route('Category.index')->with('success', 'Categoria excluída com sucesso.');
     }
 }
 

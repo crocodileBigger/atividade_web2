@@ -10,14 +10,15 @@ class AuthorController extends Controller
     // Exibe uma lista de autores
     public function index()
     {
-        $authors = Author::all();
-        return view('author.index', compact('authors'));
+        $Authors = Author::all();
+
+        return view('authors.index', compact('Authors'));
     }
 
     // Mostra o formulário para criar um novo autor
     public function create()
     {
-        return view('author.create');
+        return view('authors.create');
     }
 
     // Armazena um novo autor no banco de dados
@@ -29,19 +30,19 @@ class AuthorController extends Controller
 
         Author::create($request->all());
 
-        return redirect()->route('author.index')->with('success', 'Autor criado com sucesso.');
+        return redirect()->route('authors.index')->with('success', 'Autor criado com sucesso.');
     }
 
     // Exibe um autor específico
     public function show(Author $author)
     {
-        return view('author.show', compact('author'));
+        return view('authors.show', compact('author'));
     }
 
     // Mostra o formulário para editar um autor existente
     public function edit(Author $author)
     {
-        return view('author.edit', compact('author'));
+        return view('authors.edit', compact('author'));
     }
 
     // Atualiza um autor no banco de dados
@@ -53,7 +54,7 @@ class AuthorController extends Controller
 
         $author->update($request->all());
 
-        return redirect()->route('author.index')->with('success', 'Autor atualizado com sucesso.');
+        return redirect()->route('authors.index')->with('success', 'Autor atualizado com sucesso.');
     }
 
     // Remove um autor do banco de dados
@@ -61,6 +62,6 @@ class AuthorController extends Controller
     {
         $author->delete();
 
-        return redirect()->route('author.index')->with('success', 'Autor excluído com sucesso.');
+        return redirect()->route('authors.index')->with('success', 'Autor excluído com sucesso.');
     }
 }

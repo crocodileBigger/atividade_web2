@@ -4,7 +4,7 @@
 <div class="container">
     <h1 class="my-4">Editar Autor</h1>
 
-    <form action="{{ route('author.update', $author) }}" method="POST">
+    <form action="{{ route('authors.update', $author) }}" method="POST">
         @csrf
         @method('PUT')
 
@@ -24,7 +24,7 @@
         </div>
 
         <button type="submit" class="btn btn-success">Atualizar</button>
-        <a href="{{ route('author.index') }}" class="btn btn-secondary">Voltar</a>
+        <a href="{{ route('authors.index') }}" class="btn btn-secondary">Voltar</a>
     </form>
 </div>
 @endsection

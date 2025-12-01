@@ -4,7 +4,7 @@
 <div class="container">
     <h1 class="my-4">Adicionar Categoria</h1>
 
-    <form action="{{ route('categories.store') }}" method="POST">
+    <form action="{{ route('authors.store') }}" method="POST">
         @csrf
         <div class="mb-3">
             <label for="name" class="form-label">Nome</label>
@@ -19,7 +19,7 @@
         <button type="submit" class="btn btn-success">
             <i class="bi bi-save"></i> Salvar
         </button>
-        <a href="{{ route('categories.index') }}" class="btn btn-secondary">
+        <a href="{{ route('authors.index') }}" class="btn btn-secondary">
             <i class="bi bi-arrow-left"></i> Voltar
         </a>
     </form>
