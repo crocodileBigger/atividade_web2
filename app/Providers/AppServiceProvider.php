@@ -2,24 +2,23 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Pagination\Paginator;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
-class AppServiceProvider extends ServiceProvider
+class AuthServiceProvider extends ServiceProvider
 {
     /**
-     * Register any application services.
+     * As políticas do aplicativo.
      */
-    public function register(): void
-    {
-        //
-    }
+    protected $policies = [
+        \App\Models\User::class => \App\Policies\UserPolicy::class,
+    ];
 
     /**
-     * Bootstrap any application services.
+     * Registra qualquer serviço de autenticação/autorização.
      */
     public function boot(): void
     {
-        Paginator::useBootstrap();
+        //
     }
 }
+
