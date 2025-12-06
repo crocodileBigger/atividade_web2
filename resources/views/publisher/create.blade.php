@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1 class="my-4">Adicionar Categoria</h1>
+    <h1 class="my-4">Adicionar publisher</h1>
 
     <form action="{{ route('publisher.store') }}" method="POST">
         @csrf
