@@ -4,11 +4,9 @@ import forms from '@tailwindcss/forms';
 /** @type {import('tailwindcss').Config} */
 export default {
     content: [
-        './resources/views/**/*.blade.php',
-        './resources/js/**/*.js',        // <-- garante que classes em JS sejam lidas
-        './resources/js/**/*.vue',       // se usar Vue
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
+        './resources/views/**/*.blade.php',
     ],
 
     theme: {
