@@ -38,12 +38,6 @@
                             <i class="bi bi-tags-fill me-2"></i> Categories
                         </a>
                     </div>
-
-                    <!-- Opcional: uma mensagem de boas-vindas -->
-                    <div class="mt-5 alert alert-light border" role="alert">
-                        <i class="bi bi-info-circle"></i>
-                        Você está logado como <strong>{{ auth()->user()->name }}</strong>.
-                    </div>
                 </div>
             </div>
         </div>

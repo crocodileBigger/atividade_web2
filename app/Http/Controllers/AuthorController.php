@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class AuthorController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     // Exibe uma lista de autores
     public function index()
     {
@@ -18,12 +23,15 @@ class AuthorController extends Controller
     // Mostra o formulário para criar um novo autor
     public function create()
     {
+        $this->authorize('create', Author::class);
         return view('authors.create');
     }
 
     // Armazena um novo autor no banco de dados
     public function store(Request $request)
     {
+        $this->authorize('create', Author::class);
+        
         $request->validate([
             'name' => 'required|string|unique:authors|max:255',
         ]);
@@ -36,18 +44,22 @@ class AuthorController extends Controller
     // Exibe um autor específico
     public function show(Author $author)
     {
+        $this->authorize('view', $author);
         return view('authors.show', compact('author'));
     }
 
     // Mostra o formulário para editar um autor existente
     public function edit(Author $author)
     {
+        $this->authorize('update', $author);
         return view('authors.edit', compact('author'));
     }
 
     // Atualiza um autor no banco de dados
     public function update(Request $request, Author $author)
     {
+        $this->authorize('update', $author);
+        
         $request->validate([
             'name' => 'required|string|unique:authors,name,' . $author->id . '|max:255',
         ]);
@@ -60,6 +72,7 @@ class AuthorController extends Controller
     // Remove um autor do banco de dados
     public function destroy(Author $author)
     {
+        $this->authorize('delete', $author);
         $author->delete();
 
         return redirect()->route('authors.index')->with('success', 'Autor excluído com sucesso.');

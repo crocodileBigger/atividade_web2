@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\authorController;
+use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\UserController;
@@ -39,9 +39,14 @@ Route::patch('/borrowings/{borrowing}/return', [BorrowingController::class, 'ret
 
 // Rotas RESTful para index, show, edit, update, delete (tem que ficar depois das rotas /books/create-id-number e /books/create-select)
 Route::resource('books', BookController::class)->except(['create', 'store']);
-Route::resource('authors', authorController::class);
+Route::resource('authors', AuthorController::class);
 Route::resource('publisher', PublisherController::class);
 Route::resource('Category', CategoryController::class);
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 require __DIR__.'/auth.php';
+
+// Debug routes (remover em produção)
+if (config('app.debug')) {
+    require __DIR__.'/debug.php';
+}

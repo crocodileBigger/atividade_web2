@@ -17,7 +17,6 @@
 </head>
 <body class="font-sans antialiased bg-gray-100 text-gray-900">
     @include('layouts.navigation')
-
     <!-- Header opcional -->
     @hasSection('header')
         <header class="bg-white shadow">

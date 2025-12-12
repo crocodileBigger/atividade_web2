@@ -37,20 +37,19 @@
                         <a href="{{ route('books.show', $book->id) }}" class="btn btn-info btn-sm">
                             <i class="bi bi-eye"></i> Visualizar
                         </a>
+                        <!-- Botão de Editar (somente se autorizado) -->
+                            <a href="{{ route('books.edit', $book->id) }}" class="btn btn-primary btn-sm">
+                                <i class="bi bi-pencil"></i> Editar
+                            </a>
 
-                        <!-- Botão de Editar -->
-                        <a href="{{ route('books.edit', $book->id) }}" class="btn btn-primary btn-sm">
-                            <i class="bi bi-pencil"></i> Editar
-                        </a>
-
-                        <!-- Botão de Deletar -->
-                        <form action="{{ route('books.destroy', $book->id) }}" method="POST" style="display: inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger btn-sm" onclick="return confirm('Deseja excluir este livro?')">
-                                <i class="bi bi-trash"></i> Deletar
-                            </button>
-                        </form>
+                        <!-- Botão de Deletar (somente se autorizado) -->
+                            <form action="{{ route('books.destroy', $book->id) }}" method="POST" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger btn-sm" onclick="return confirm('Deseja excluir este livro?')">
+                                    <i class="bi bi-trash"></i> Deletar
+                                </button>
+                            </form>
                     </td>
                 </tr>
             @empty

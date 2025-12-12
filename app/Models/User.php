@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'user_type',
     ];
 
     /**
@@ -44,6 +45,21 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->user_type === 'admin';
+    }
+
+    public function isBibliotecario(): bool
+    {
+        return $this->user_type === 'bibliotecario';
+    }
+
+    public function isCliente(): bool
+    {
+        return $this->user_type === 'cliente';
     }
 
     public function books()

@@ -11,38 +11,46 @@ use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     // Formulário com input de ID
     public function createWithId()
     {
+        $this->authorize('create', Book::class);
         return view('books.create-id');
     }
 
     // Salvar livro com input de ID
 
-public function storeWithId(Request $request)
-{
-    $request->validate([
-        'capa' => 'required|image|mimes:jpg,jpeg,png,webp',
-        'title' => 'required|string|max:255',
-        'publisher_id' => 'required|exists:publishers,id',
-        'author_id' => 'required|exists:authors,id',
-        'category_id' => 'required|exists:categories,id',
-    ]);
+    public function storeWithId(Request $request)
+    {
+        $this->authorize('create', Book::class);
+        $request->validate([
+            'capa' => 'required|image|mimes:jpg,jpeg,png,webp',
+            'title' => 'required|string|max:255',
+            'publisher_id' => 'required|exists:publishers,id',
+            'author_id' => 'required|exists:authors,id',
+            'category_id' => 'required|exists:categories,id',
+        ]);
 
-    $data = $request->all();
+        $data = $request->all();
 
-    if ($request->hasFile('capa')) {
-        $data['capa'] = $request->file('capa')->store('capas', 'public');
-        // Isso salva em: storage/app/public/capas/xxxx.jpg
+        if ($request->hasFile('capa')) {
+            $data['capa'] = $request->file('capa')->store('capas', 'public');
+            // Isso salva em: storage/app/public/capas/xxxx.jpg
+        }
+        Book::create($data);
+        return redirect()->route('books.index')->with('success', 'Livro criado com sucesso.');
     }
-    Book::create($data);
-    return redirect()->route('books.index')->with('success', 'Livro criado com sucesso.');
-}
 
 
     // Formulário com input select
     public function createWithSelect()
     {
+        $this->authorize('create', Book::class);
         $publisher = Publisher::all();
         $author = Author::all();
         $categories = Category::all();
@@ -53,6 +61,7 @@ public function storeWithId(Request $request)
     // Salvar livro com input select
     public function storeWithSelect(Request $request)
     {
+        $this->authorize('create', Book::class);
         $request->validate([
             'capa' => 'required|image|mimes:jpg,jpeg,png,webp',
             'title' => 'required|string|max:255',
@@ -68,20 +77,22 @@ public function storeWithId(Request $request)
             'category_id',
         ]);
 
-    if ($request->hasFile('capa')) {
-        $data['capa'] = $request->file('capa')->store('capas', 'public');
-    }
+        if ($request->hasFile('capa')) {
+            $data['capa'] = $request->file('capa')->store('capas', 'public');
+        }
 
-    Book::create($data);
+        Book::create($data);
 
-    return redirect()
-        ->route('books.index')
-        ->with('success', 'Livro criado com sucesso.');
+        return redirect()
+            ->route('books.index')
+            ->with('success', 'Livro criado com sucesso.');
     }
 
 
     public function edit(Book $book)
     {
+        $this->authorize('update', $book);
+
         $publishers = Publisher::all();
         $authors = Author::all();
         $categories = Category::all();
@@ -91,6 +102,8 @@ public function storeWithId(Request $request)
 
     public function update(Request $request, Book $book)
     {
+        $this->authorize('update', $book);
+
         $request->validate([
             'title' => 'required|string|max:255',
             'publisher_id' => 'required|exists:publishers,id',
@@ -135,6 +148,8 @@ public function storeWithId(Request $request)
 
     public function destroy(Book $book)
     {
+        $this->authorize('delete', $book);
+
     // Se existir capa, remove do storage
     if ($book->capa && Storage::disk('public')->exists($book->capa)) {
         Storage::disk('public')->delete($book->capa);
@@ -148,6 +163,8 @@ public function storeWithId(Request $request)
 
     public function show(Book $book)
     {
+        $this->authorize('view', $book);
+
     // Carregando autor, editora e categoria do livro com eager loading
     $book->load(['author', 'publisher', 'category']);
 
