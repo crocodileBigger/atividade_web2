@@ -8,29 +8,39 @@ use App\Models\Borrowing;
 
 class BorrowingController extends Controller
 {
-   public function store(Request $request, Book $book)
+    public function store(Request $request, Book $book)
     {
-    $request->validate([
-        'user_id' => 'required|exists:users,id',
-    ]);
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+        ]);
 
-    // Verifica se existe um empréstimo em aberto para este livro (returned_at é null)
-    $emprestimoEmAberto = Borrowing::where('book_id', $book->id)
-        ->whereNull('returned_at')
-        ->first();
+        $total = Borrowing::whereNull('returned_at')
+            ->where('user_id', $request->user_id)
+            ->count();
 
-    if ($emprestimoEmAberto) {
+        $emprestimoEmAberto = Borrowing::where('book_id', $book->id)
+            ->whereNull('returned_at')
+            ->exists();
+
+        if( $total >= 5 ) {
+            return redirect()->route('books.show', $book)
+            ->with('error', 'O usuário já atingiu o limite de 5 livros emprestados simultaneamente.');
+
+        }
+
+        if ($emprestimoEmAberto) {
+            return redirect()->route('books.show', $book)
+                ->with('error', 'Este livro já possui um empréstimo em aberto.');
+        }
+
+        Borrowing::create([
+            'user_id' => $request->user_id,
+            'book_id' => $book->id,
+            'borrowed_at' => now(),
+        ]);
+
         return redirect()->route('books.show', $book)
-            ->with('error', 'Este livro já possui um empréstimo em aberto e não pode ser emprestado novamente.');
-    }
-
-    Borrowing::create([
-        'user_id' => $request->user_id,
-        'book_id' => $book->id,
-        'borrowed_at' => now(),
-    ]);
-
-    return redirect()->route('books.show', $book)->with('success', 'Empréstimo registrado com sucesso.');
+            ->with('success', 'Empréstimo registrado com sucesso.');
     }
 
     public function returnBook(Borrowing $borrowing)
@@ -48,7 +58,4 @@ class BorrowingController extends Controller
 
     return view('users.borrowings', compact('user', 'borrowings'));
     }
-
-
-
 }

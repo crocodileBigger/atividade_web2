@@ -40,7 +40,7 @@ class ResourcePolicy
 
         $modelType = class_basename($model);
         $modelId = $model->id ?? 'N/A';
-        
+
         return Response::denyWithStatus(
             403,
             "[ATUALIZAR] Acesso negado para o usuário '{$user->name}' (ID: {$user->id}). "
@@ -58,7 +58,7 @@ class ResourcePolicy
 
         $modelType = class_basename($model);
         $modelId = $model->id ?? 'N/A';
-        
+
         return Response::denyWithStatus(
             403,
             "[DELETAR] Acesso negado para o usuário '{$user->name}' (ID: {$user->id}). "
