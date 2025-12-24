@@ -7,14 +7,14 @@
             <div class="card border-danger">
                 <div class="card-header bg-danger text-white">
                     <h4 class="mb-0">
-                        <i class="bi bi-shield-exclamation"></i> 
+                        <i class="bi bi-shield-exclamation"></i>
                         403 | Acesso Não Autorizado
                     </h4>
                 </div>
                 <div class="card-body">
                     <div class="alert alert-danger">
                         <h5 class="alert-heading">
-                            <i class="bi bi-exclamation-triangle-fill"></i> 
+                            <i class="bi bi-exclamation-triangle-fill"></i>
                             Você não tem permissão para acessar este recurso
                         </h5>
                         <hr>
@@ -42,7 +42,7 @@
                             <div class="alert alert-warning mt-3">
                                 <strong><i class="bi bi-info-circle"></i> Modo Debug:</strong>
                                 <p class="mb-0">
-                                    Para mais detalhes sobre as permissões, acesse: 
+                                    Para mais detalhes sobre as permissões, acesse:
                                     <a href="{{ url('/debug-auth') }}" class="alert-link">
                                         /debug-auth
                                     </a>
