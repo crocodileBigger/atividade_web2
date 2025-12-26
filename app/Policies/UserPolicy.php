@@ -48,4 +48,11 @@ class UserPolicy
     {
         return $currentUser->isAdmin();
     }
+
+
+     public function pagarMulta(User $authUser, User $user): bool
+     {
+        return $authUser->isBibliotecario();
+     }
+
 }

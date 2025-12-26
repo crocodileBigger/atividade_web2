@@ -13,6 +13,7 @@ return new class extends Migration
             $table->foreignId('book_id')->constrained()->onDelete('cascade'); // Relacionamento com Book
             $table->timestamp('borrowed_at')->nullable(); // Data de Empréstimo
             $table->timestamp('returned_at')->nullable(); // Data de Devolução
+            $table->date('due_date')->nullable();
             $table->timestamps();
         });
     }

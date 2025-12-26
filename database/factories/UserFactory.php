@@ -16,6 +16,7 @@ class UserFactory extends Factory
             'user_type'  => 'cliente', // padrão
             'birth_date' => fake()->date(),
             'password'   => Hash::make('123456'),
+            'preco' => null,
         ];
     }
 }

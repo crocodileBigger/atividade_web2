@@ -18,6 +18,7 @@ class BorrowingFactory extends Factory
             'book_id' => Book::inRandomOrder()->first()->id, // Seleciona um livro aleatório
             'borrowed_at' => $this->faker->dateTimeBetween('-1 month', 'now'), // Data de empréstimo
             'returned_at' => $this->faker->optional()->dateTimeBetween('now', '+1 month'), // Data de devolução opcional
+            'due_date' => now()->addDays(10), // padrão de 10 dias
         ];
     }
 }

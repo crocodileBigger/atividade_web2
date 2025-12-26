@@ -62,6 +62,18 @@ class User extends Authenticatable
         return $this->user_type === 'cliente';
     }
 
+    public function podeEmprestar(): bool
+    {
+        return $this->preco === null;
+    }
+
+    public function zerarMulta(): void
+    {
+        $this->update([
+            'multa' => null,
+        ]);
+    }
+
     public function books()
     {
         return $this->belongsToMany(Book::class, 'borrowings')

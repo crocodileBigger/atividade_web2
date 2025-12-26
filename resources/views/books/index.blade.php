@@ -33,15 +33,18 @@
                     <td>{{ $book->title }}</td>
                     <td>{{ $book->author->name }}</td>
                     <td>
-                        <!-- Botão de Visualizar -->
+                            <!-- Botão de Visualizar -->
                         <a href="{{ route('books.show', $book->id) }}" class="btn btn-info btn-sm">
-                            <i class="bi bi-eye"></i> Visualizar
+                           <i class="bi bi-eye"></i> Visualizar
                         </a>
+                        @can('update', $book)
                         <!-- Botão de Editar (somente se autorizado) -->
                             <a href="{{ route('books.edit', $book->id) }}" class="btn btn-primary btn-sm">
                                 <i class="bi bi-pencil"></i> Editar
                             </a>
+                        @endcan
 
+                        @can('delete', $book)
                         <!-- Botão de Deletar (somente se autorizado) -->
                             <form action="{{ route('books.destroy', $book->id) }}" method="POST" style="display: inline;">
                                 @csrf
@@ -50,6 +53,7 @@
                                     <i class="bi bi-trash"></i> Deletar
                                 </button>
                             </form>
+                        @endcan
                     </td>
                 </tr>
             @empty

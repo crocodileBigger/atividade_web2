@@ -25,7 +25,13 @@ class BorrowingController extends Controller
         if( $total >= 5 ) {
             return redirect()->route('books.show', $book)
             ->with('error', 'O usuário já atingiu o limite de 5 livros emprestados simultaneamente.');
+        }
 
+        $userTotal = User::find($request->user_id);
+
+        if (!$userTotal->podeEmprestar()) {
+            return redirect()->route('books.show', $book)
+                ->with('error', 'Não pode pegar um livro enquanto tem uma multa em aberto.');
         }
 
         if ($emprestimoEmAberto) {

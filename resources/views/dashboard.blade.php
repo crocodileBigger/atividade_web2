@@ -37,6 +37,12 @@
                            class="btn btn-warning btn-lg text-dark">
                             <i class="bi bi-tags-fill me-2"></i> Categories
                         </a>
+
+                        <!-- Botão Categories -->
+                        <a href="{{ route('users.index') }}"
+                           class="btn btn-secondary btn-lg btn-lg">
+                            <i class="bi bi-tags-fill me-2"></i> Users
+                        </a>
                     </div>
                 </div>
             </div>
