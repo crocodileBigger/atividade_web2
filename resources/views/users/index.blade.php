@@ -21,7 +21,11 @@
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>
-                        {{ $user->preco ?? 'ok' }}
+                        @if(is_null($user->preco))
+                            <span class="badge bg-success">OK</span>
+                        @else
+                            <span class="badge bg-danger">R$ {{ number_format($user->preco, 2, ',', '.') }}</span>
+                        @endif
                     </td>
                     <td>
                         <a href="{{ route('users.show', $user) }}" class="btn btn-info btn-sm">

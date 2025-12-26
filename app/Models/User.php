@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'user_type',
+        'preco',
     ];
 
     /**
@@ -70,7 +71,7 @@ class User extends Authenticatable
     public function zerarMulta(): void
     {
         $this->update([
-            'multa' => null,
+            'preco' => null,
         ]);
     }
 

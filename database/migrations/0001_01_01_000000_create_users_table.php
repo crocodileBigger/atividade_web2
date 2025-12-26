@@ -18,7 +18,7 @@ return new class extends Migration
             $table->enum('user_type', ['admin', 'bibliotecario', 'cliente'])->default('cliente');
             $table->date('birth_date')->nullable();
             $table->string('password');
-            $table->decimal('preco', 10, 2)->nullable();
+            $table->decimal('preco', 10, 2)->default(0);
             $table->timestamps();
         });
     }

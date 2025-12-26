@@ -13,7 +13,13 @@
         </div>
         <div class="card-body">
             <p><strong>Email:</strong> {{ $user->email }}</p>
-            <p><strong>Multa:</strong> {{ $user->preco }}</p>
+            <p><strong>Multa:</strong> 
+                @if(is_null($user->preco))
+                    <span class="badge bg-success">Sem multa</span>
+                @else
+                    <span class="badge bg-danger">R$ {{ number_format($user->preco, 2, ',', '.') }}</span>
+                @endif
+            </p>
 
             {{-- Botão de quitar multa (apenas para quem pode) --}}
             @can('pagarMulta', $user)
