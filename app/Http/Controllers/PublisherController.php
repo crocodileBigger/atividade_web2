@@ -1,6 +1,5 @@
 <?php
 namespace App\Http\Controllers;
-
 use App\Models\Publisher;
 use Illuminate\Http\Request;
 
@@ -29,7 +28,7 @@ class PublisherController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create', Publisher::class);
-        
+
         $request->validate([
             'name' => 'required|string|unique:publishers|max:255',
         ]);
@@ -57,7 +56,7 @@ class PublisherController extends Controller
     public function update(Request $request, Publisher $publisher)
     {
         $this->authorize('update', $publisher);
-        
+
         $request->validate([
             'name' => 'required|string|unique:publishers,name,' . $publisher->id . '|max:255',
         ]);

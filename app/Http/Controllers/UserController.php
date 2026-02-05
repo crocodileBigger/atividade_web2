@@ -1,14 +1,7 @@
 <?php
-
 namespace App\Http\Controllers;
-
-// Classe base para controllers
 use Illuminate\Http\Request;
-
-// Model de usuário
 use App\Models\User;
-
-// Facade para acessar o usuário autenticado
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -42,10 +35,8 @@ class UserController extends Controller
     {
         // Verifica se o usuário autenticado pode listar usuários
         $this->authorize('viewAny', User::class);
-
         // Busca usuários com paginação
         $users = User::paginate(10);
-
         // Retorna a view com os dados
         return view('users.index', compact('users'));
     }
@@ -59,7 +50,6 @@ class UserController extends Controller
     {
         // Verifica se pode visualizar este usuário
         $this->authorize('view', $user);
-
         // Exibe a view de detalhes do usuário
         return view('users.show', compact('user'));
     }
@@ -86,7 +76,6 @@ class UserController extends Controller
     {
         // Garante que o usuário tem permissão para atualizar
         $this->authorize('update', $user);
-
         // Validação dos campos enviados pelo formulário
         $validatedData = $request->validate([
             'name'      => 'required|string|max:255',
@@ -100,18 +89,14 @@ class UserController extends Controller
          * - Usuários comuns só podem alterar nome e email
          */
         if ($request->has('user_type') && Auth::user()->isAdmin()) {
-
             // Admin pode atualizar tudo
             $user->update($validatedData);
-
         } else {
-
             // Usuário comum atualiza apenas nome e email
             $user->update(
                 $request->only('name', 'email')
             );
         }
-
         // Redireciona para a lista com mensagem de sucesso
         return redirect()
             ->route('users.index')
@@ -128,10 +113,8 @@ class UserController extends Controller
     {
         // Verifica se o usuário autenticado pode quitar multas
         $this->authorize('pagarMulta', $user);
-
         // Regra de negócio no model
         $user->zerarMulta();
-
         // Retorna para a página anterior com sucesso
         return redirect()->back()
             ->with('success', 'Multa quitada com sucesso.');
